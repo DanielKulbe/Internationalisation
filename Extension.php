@@ -56,10 +56,12 @@ class Extension extends BaseExtension
         $this->addTwigFunction('i18n_menu', 'localizedMenu');
         $this->addTwigFunction('i18n_langmenu', 'languageMenu');
         $this->addTwigFunction('i18n_attribute', 'localizedField');
+        $this->addTwigFunction('i18n_key', 'localizedFieldKey');
 
         $this->addTwigFilter('i18n_lang', 'languageNameFromLocale');
         $this->addTwigFilter('i18n_link', 'languageLink');
         $this->addTwigFilter('i18n_attribute', 'localizedField');
+        $this->addTwigFilter('i18n_key', 'localizedFieldKey');
 
 
         // Handle locale setup
@@ -245,7 +247,7 @@ class Extension extends BaseExtension
                 break;
         }
 
-        return Lib::fixPath($link);
+        return $link;
     }
 
 
@@ -391,7 +393,7 @@ class Extension extends BaseExtension
 
             } else {
                 // we assume the user links to this on purpose.
-                $item['link'] = Lib::fixPath($this->app['paths']['root'] . $item['path']);
+                $item['link'] = $item['path'];
             }
 
         }
@@ -478,5 +480,40 @@ class Extension extends BaseExtension
         }
 
         return $field;
+    }
+
+
+    /**
+     * Will render the localized field name, defined in i18nContent() when addressing
+     * original field names.
+     *
+     * @param  object $record    The Content / Menu record object
+     * @param  string $fieldname The name of the fieldkey you want to output localized
+     * @return null              Or the rendered Twig_Markup
+     */
+    public function localizedFieldKey ($record, $fieldname)
+    {
+        $field = null;
+        $fieldKey = $fieldname;
+
+        if (!empty($record) && is_object($record) && $record instanceof Content) {
+            $field = $record->getDecodedValue($fieldname);
+            if (!empty($field)) {
+                $info = $record->fieldinfo($fieldname);
+
+                if (isset($info['i18n']) && $info['i18n'] === true) {
+                    $lang = substr($this->locale, 0, 2);
+
+                    if (!preg_match('/_'.$lang.'$/', $fieldname)) {
+                        $i18nFieldname = $fieldname .'_'.$lang;
+                        $i18nField = $record->getDecodedValue($i18nFieldname);
+
+                        if ($i18nField) $fieldKey = $i18nFieldname;
+                    }
+                }
+            }
+        }
+
+        return $fieldKey;
     }
 }
