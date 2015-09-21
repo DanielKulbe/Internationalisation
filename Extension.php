@@ -332,7 +332,7 @@ class Extension extends BaseExtension
         foreach ($menu as $key => $item) {
             $menu[$key] = $this->menuHelper($item);
             if (isset($item['submenu'])) {
-                    $menu[$key]['submenu'] = $this->menuBuilder($item['submenu']);
+                $menu[$key]['submenu'] = $this->menuBuilder($item['submenu']);
             }
 
         }
