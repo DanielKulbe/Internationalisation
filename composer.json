@@ -31,7 +31,7 @@
     },
     "extra": {
         "bolt-assets": "assets",
-        "bolt-icon": "assets/i18n-symbol.svg",
+        "bolt-icon": "assets/i18n-symbol.png",
         "branch-alias" : {
             "dev-master" : "1.0.x-dev"
         }
