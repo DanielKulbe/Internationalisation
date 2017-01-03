@@ -16,6 +16,10 @@
         {
             "type": "vcs",
             "url": "http://gitlab.daniel-kulbe.de/root/bolt-internationalisation.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:DanielKulbe/Internationalisation.git"
         }
     ],
     "require": {
