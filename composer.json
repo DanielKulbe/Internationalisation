@@ -15,7 +15,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "http://gitlab.daniel-kulbe.de/root/bolt-internationalisation.git"
+            "url": "git@bitbucket.org:danielkulbe/bolt-internationalisation-i18n.git"
         },
         {
             "type": "vcs",
